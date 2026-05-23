@@ -9,4 +9,10 @@ mdEditorRouter.get("/md-content", async (c) => {
   return result.success(res, c);
 });
 
+mdEditorRouter.post("/md-content", async (c) => {
+  const { content } = await c.req.json<{ content: string }>();
+  const res = await mdService.setMdContent(c.env, content);
+  return result.success(res, c);
+});
+
 export default mdEditorRouter;
