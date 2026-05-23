@@ -7,9 +7,6 @@ import { cors } from 'hono/cors';
 // 创建应用
 const app = new Hono<{ Bindings: Env }>()
 
-// 路由注册
-app.route('/', router)
-
 // 注册cors中间件
 app.use(cors({
   origin: '*',
@@ -18,6 +15,9 @@ app.use(cors({
   exposeHeaders: ['Content-Length', 'Content-Type', 'Authorization'],
   maxAge: 600,
 }))
+
+// 路由注册
+app.route('/', router)
 
 // 全局异常处理
 app.onError(globalExceptionHandler);
