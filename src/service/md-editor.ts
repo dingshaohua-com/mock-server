@@ -1,6 +1,6 @@
 // kv数据库不支持表和文档，所以以前缀来区分表行为吧
-const MD_EDITOR_KEY_PREFIX = "md-editor:";
-const kvKey = `${MD_EDITOR_KEY_PREFIX}md_content`;
+const DATA_KEY_PREFIX = "mock-server:";
+const kvKey = `${DATA_KEY_PREFIX}md-editor>md_content`;
 
 export async function getMdContent(env: Env): Promise<string> {
   return (await env.MOCK_SERVER.get(kvKey)) ?? "";
