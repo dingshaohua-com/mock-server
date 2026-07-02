@@ -35,3 +35,66 @@ const app = new Hono<{ Bindings: CloudflareBindings }>()
   不建议混用。
 
 你现在这套思路已经是偏工程化、可维护的正确方向了。后面只要统一前缀策略，就会非常稳。
+
+
+## 具体业务
+**1. 查询用户列表**
+
+```bash
+curl https://mock.dingshaohua.com/user/list
+```
+
+返回示例：
+
+```json
+{
+  "code": 0,
+  "data": [
+    {
+      "id": 1,
+      "name": "张三"
+    }
+  ],
+  "msg": "ok"
+}
+```
+
+**2. 查询单个用户**
+
+```bash
+curl "https://mock.dingshaohua.com/user?id=1"
+```
+
+**3. 新增用户**
+
+不传 `id`，后端会自动生成：
+
+```bash
+curl -X POST https://mock.dingshaohua.com/user \
+  -H "Content-Type: application/json" \
+  -d '{"name":"张三","age":20,"gender":0,"love":["玩游戏","运动"]}'
+```
+
+也可以手动传 `id`：
+
+```bash
+curl -X POST https://mock.dingshaohua.com/user \
+  -H "Content-Type: application/json" \
+  -d '{"id":1,"name":"张三","age":20,"gender":0,"love":["玩游戏","运动"]}'
+```
+
+**4. 更新用户**
+
+更新时必须传完整用户对象，包括 `id`：
+
+```bash
+curl -X PUT https://mock.dingshaohua.com/user \
+  -H "Content-Type: application/json" \
+  -d '{"id":1,"name":"李四","age":22,"gender":0,"love":["运动","看书"]}'
+```
+
+**5. 删除用户**
+
+```bash
+curl -X DELETE "https://mock.dingshaohua.com/user?id=1"
+```
